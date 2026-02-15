@@ -51,6 +51,16 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# Models and data
+models/*.joblib
+data/raw/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Environment variables
+.env
+.env.local
+
 # Translations
 *.mo
 *.pot
