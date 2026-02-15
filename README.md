@@ -22,7 +22,7 @@ System jest zbudowany w celu:
 ## 📊 Dane treningowe
 
 - **Liczba próbek**: 24,181 nieruchomości
-- **Liczba cech**: 8 (powierzchnia, liczba pokoi, rok budowy, typ ogrzewania, materiał budynku, typ budynku, rynek, województwo)
+- **Liczba cech**: 9 (powierzchnia, liczba pokoi, rok budowy, typ ogrzewania, materiał budynku, typ budynku, rynek, województwo, miasto)
 - **Województwa**: 16 polskich województw
 - **Zakresy cen**: 56,396 PLN - 1,377,242 PLN
 
@@ -124,8 +124,7 @@ curl -X POST http://localhost:8000/predict \
 - `building_type` (string) - typ budynku **[wymagane]** - wolnostojący, bliźniak, szeregowiec, blok, itp.
 - `market` (string) - rynek **[wymagane]** - pierwotny lub wtórny
 - `voivodeship` (string) - województwo **[wymagane]** - mazowieckie, małopolskie, itp.
-- `city` (string) - miasto **[opcjonalne]** - pokaże statystyki dla tego miasta
-- `district` (string) - powiat **[opcjonalne]** - pokaże statystyki dla tego powiatu
+- `city` (string) - miasto **[wymagane]** - wpływa na predykcję ceny i statystyki lokalne
 
 **Response**:
 ```json

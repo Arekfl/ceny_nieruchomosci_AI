@@ -20,7 +20,7 @@ FEATURES_PATH = MODELS_DIR / "features.joblib"
 MODEL_METADATA = {
     "model_type": "Regression",
     "algorithm": "Random Forest Regressor",
-    "features_used": ["Area (m²)", "Number of rooms", "year_const", "Heating", "Building material", "Building type", "Market", "voivodeship"],
+    "features_used": ["Area (m²)", "Number of rooms", "year_const", "Heating", "Building material", "Building type", "Market", "voivodeship", "city"],
     "training_samples": 19344,
     "test_r2_score": 0.6364,
     "test_rmse": 148161.29,

@@ -81,8 +81,7 @@ class PredictionRequest(BaseModel):
     building_type: BuildingType = Field(..., description="Type of building", example="bliźniak")
     market: MarketType = Field(..., description="Primary or secondary market", example="pierwotny")
     voivodeship: Voivodeship = Field(..., description="Voivodeship (province)", example="mazowieckie")
-    city: Annotated[Optional[str], Field(None, description="City name (optional, for local statistics)", example="Kraków")] = None
-    district: Annotated[Optional[str], Field(None, description="District name (optional, for local statistics)", example="Wawer")] = None
+    city: str = Field(..., description="City name", example="Kraków")
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -95,8 +94,7 @@ class PredictionRequest(BaseModel):
                 "building_type": "bliźniak",
                 "market": "pierwotny",
                 "voivodeship": "mazowieckie",
-                "city": "Kraków",
-                "district": "Wawer"
+                "city": "Kraków"
             }
         }
     )
