@@ -81,6 +81,8 @@ class PredictionRequest(BaseModel):
     building_type: BuildingType = Field(..., description="Type of building", example="bliźniak")
     market: MarketType = Field(..., description="Primary or secondary market", example="pierwotny")
     voivodeship: Voivodeship = Field(..., description="Voivodeship (province)", example="mazowieckie")
+    city: Optional[str] = Field(None, description="City name (optional, for local statistics)", example="Kraków")
+    district: Optional[str] = Field(None, description="District name (optional, for local statistics)", example="Wawer")
 
     class Config:
         """Configuration"""
@@ -104,6 +106,7 @@ class PredictionResponse(BaseModel):
     currency: str = Field(default="PLN", description="Currency")
     confidence: str = Field(..., description="Model confidence level")
     input_features: PredictionRequest
+    local_stats: Optional[dict] = Field(None, description="Local statistics for the city/district if provided")
 
 
 class FilterRequest(BaseModel):

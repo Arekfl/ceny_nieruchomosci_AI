@@ -1,8 +1,8 @@
-# Property Price Prediction System
+# Property Price Prediction System 🏠
 
 System AI do przewidywania cen mieszkań w Polsce przy użyciu machine learning.
 
-## Opis projektu
+## 📋 Opis projektu
 
 System jest zbudowany w celu:
 - **Analizy** danych dotyczących cen nieruchomości w Polsce
@@ -10,23 +10,23 @@ System jest zbudowany w celu:
 - **Udostępnienia** modelu jako usługi webowej (API) dla predykcji cen
 - **Filtrowania** właściwości po województwie, mieście i powiecie
 
-## Cechy systemu
+## 🎯 Cechy systemu
 
- **Model Machine Learning** - Random Forest Regressor  
- **API REST** - FastAPI z automatyczną dokumentacją  
- **Predykcja cen** - na podstawie charakterystyk nieruchomości  
- **Filtrowanie danych** - po województwie, mieście, powiecie  
- **Walidacja danych** - Pydantic models  
- **Dokumentacja** - Swagger/OpenAPI  
+✅ **Model Machine Learning** - Random Forest Regressor  
+✅ **API REST** - FastAPI z automatyczną dokumentacją  
+✅ **Predykcja cen** - na podstawie charakterystyk nieruchomości  
+✅ **Filtrowanie danych** - po województwie, mieście, powiecie  
+✅ **Walidacja danych** - Pydantic models  
+✅ **Dokumentacja** - Swagger/OpenAPI  
 
-## Dane treningowe
+## 📊 Dane treningowe
 
 - **Liczba próbek**: 24,181 nieruchomości
 - **Liczba cech**: 8 (powierzchnia, liczba pokoi, rok budowy, typ ogrzewania, materiał budynku, typ budynku, rynek, województwo)
 - **Województwa**: 16 polskich województw
 - **Zakresy cen**: 56,396 PLN - 1,377,242 PLN
 
-## Model
+## 🤖 Model
 
 **Typ**: Regresja (przewidywanie wartości numerycznej)  
 **Algorytm**: Random Forest Regressor (100 drzew decyzyjnych)  
@@ -38,13 +38,13 @@ System jest zbudowany w celu:
 - **Train set**: 19,344 próbek
 - **Test set**: 4,837 próbek
 
-## Wymagania
+## 🛠️ Wymagania
 
 - Python 3.10+
 - Narzędzie `uv` do zarządzania zależnościami
 - Git do kontroli wersji
 
-## Instalacja
+## 📦 Instalacja
 
 ### 1. Klonowanie repozytorium
 
@@ -73,7 +73,7 @@ source .venv/bin/activate  # Linux/Mac
 pip install pandas numpy scikit-learn fastapi uvicorn pydantic joblib python-dotenv
 ```
 
-## Uruchomienie serwera
+## 🚀 Uruchomienie serwera
 
 ### Opcja 1: Bezpośrednio z Pythona
 
@@ -91,34 +91,73 @@ Serwer będzie dostępny pod adresem:
 - **API**: http://localhost:8000
 - **Dokumentacja**: http://localhost:8000/docs
 
-## API Endpoints
+## 📡 API Endpoints
 
-### 1. Predykcja ceny
+### 1. Predykcja ceny 🏠
 ```http
 POST /predict
 ```
 
-**Request**:
-```json
-{
-  "area": 120.5,
-  "rooms": 4,
-  "year_constructed": 2020,
-  "heating": "gazowe",
-  "building_material": "cegła",
-  "building_type": "bliźniak",
-  "market": "pierwotny",
-  "voivodeship": "mazowieckie"
-}
+**Przykład - Mieszkanie w Krakowie**:
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "area": 90.0,
+    "rooms": 3,
+    "year_constructed": 2019,
+    "heating": "miejskie",
+    "building_material": "cegła",
+    "building_type": "blok",
+    "market": "wtórny",
+    "voivodeship": "małopolskie",
+    "city": "Kraków"
+  }'
 ```
+
+**Parametry**:
+- `area` (float) - powierzchnia w m² **[wymagane]**
+- `rooms` (int) - liczba pokoi **[wymagane]**
+- `year_constructed` (int) - rok budowy **[wymagane]**
+- `heating` (string) - typ ogrzewania **[wymagane]** - gazowe, węglowe, pompa ciepła, elektryczne, inne, itp.
+- `building_material` (string) - materiał budynku **[wymagane]** - cegła, pustak, beton, itp.
+- `building_type` (string) - typ budynku **[wymagane]** - wolnostojący, bliźniak, szeregowiec, blok, itp.
+- `market` (string) - rynek **[wymagane]** - pierwotny lub wtórny
+- `voivodeship` (string) - województwo **[wymagane]** - mazowieckie, małopolskie, itp.
+- `city` (string) - miasto **[opcjonalne]** - pokaże statystyki dla tego miasta
+- `district` (string) - powiat **[opcjonalne]** - pokaże statystyki dla tego powiatu
 
 **Response**:
 ```json
 {
-  "predicted_price": 485250.50,
+  "predicted_price": 453590.44,
   "currency": "PLN",
   "confidence": "High",
-  "input_features": { ... }
+  "input_features": {
+    "area": 90.0,
+    "rooms": 3,
+    "year_constructed": 2019,
+    "heating": "miejskie",
+    "building_material": "cegła",
+    "building_type": "blok",
+    "market": "wtórny",
+    "voivodeship": "małopolskie",
+    "city": "Kraków",
+    "district": null
+  },
+  "local_stats": {
+    "location": {
+      "city": "Kraków",
+      "district": null
+    },
+    "properties_count": 1807,
+    "avg_price": 317838.71,
+    "min_price": 58533.25,
+    "max_price": 1350316.49,
+    "avg_area": 48.12,
+    "avg_rooms": 2.52,
+    "avg_year": 1998
+  }
 }
 ```
 
@@ -134,10 +173,10 @@ GET /health
 
 ### 4. Filtrowanie właściwości
 ```http
-GET /filter?voivodeship=mazowieckie
+GET /filter?voivodeship=mazowieckie&city=Kraków
 ```
 
-## Testowanie API
+## 🧪 Testowanie API
 
 ```bash
 # Upewnij się że serwer jest uruchomiony
@@ -147,7 +186,7 @@ python run_server.py
 python test_api.py
 ```
 
-## Struktura projektu
+## 📁 Struktura projektu
 
 ```
 ceny_nieruchomosci_AI/
@@ -179,11 +218,12 @@ ceny_nieruchomosci_AI/
 - **Pydantic** - Walidacja danych
 - **joblib** - Serializacja modelu
 
-## Licencja
+## 📝 Licencja
 
 MIT License
 
 ---
 
-**Wersja**: 1.0.0  
-**Data**: Luty 2025
+**Wersja**: 1.0.1  
+**Data**: Luty 2025  
+**Ostatnia aktualizacja**: Dodano filtrowanie po mieście i powiecie

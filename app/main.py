@@ -107,7 +107,8 @@ async def predict_price(request: PredictionRequest):
         "building_material": "cegła",
         "building_type": "bliźniak",
         "market": "pierwotny",
-        "voivodeship": "mazowieckie"
+        "voivodeship": "mazowieckie",
+        "city": "Kraków"
     }
     ```
     """
@@ -142,6 +143,37 @@ async def predict_price(request: PredictionRequest):
         # Make prediction
         prediction = model.predict(X)[0]
         
+        # Calculate local statistics if city or district provided
+        local_stats = None
+        if request.city or request.district:
+            try:
+                df = pd.read_csv(DATA_DIR / "data_processed.csv")
+                filtered_df = df.copy()
+                
+                if request.city:
+                    filtered_df = filtered_df[filtered_df['city'].str.lower() == request.city.lower()]
+                
+                if request.district and len(filtered_df) > 0:
+                    filtered_df = filtered_df[filtered_df['district'].str.lower() == request.district.lower()]
+                
+                if len(filtered_df) > 0:
+                    local_stats = {
+                        "location": {
+                            "city": request.city,
+                            "district": request.district
+                        },
+                        "properties_count": len(filtered_df),
+                        "avg_price": round(float(filtered_df['Price'].mean()), 2),
+                        "min_price": round(float(filtered_df['Price'].min()), 2),
+                        "max_price": round(float(filtered_df['Price'].max()), 2),
+                        "avg_area": round(float(filtered_df['Area (m²)'].mean()), 2),
+                        "avg_rooms": round(float(filtered_df['Number of rooms'].mean()), 2),
+                        "avg_year": int(filtered_df['year_const'].mean())
+                    }
+            except Exception as e:
+                # If local stats fail, continue with prediction only
+                print(f"Warning: Could not load local statistics: {e}")
+        
         # Determine confidence based on input reasonableness
         confidence = determine_confidence(request, prediction)
         
@@ -149,7 +181,8 @@ async def predict_price(request: PredictionRequest):
             predicted_price=round(float(prediction), 2),
             currency="PLN",
             confidence=confidence,
-            input_features=request
+            input_features=request,
+            local_stats=local_stats
         )
         
     except Exception as e:
