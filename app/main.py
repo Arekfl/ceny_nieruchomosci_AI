@@ -26,8 +26,8 @@ app = FastAPI(
     title="Property Price Prediction API",
     description="AI-powered system for predicting residential property prices in Poland",
     version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc"
+    docs_url="/redoc",
+    redoc_url=None
 )
 
 # Add CORS middleware to allow cross-origin requests

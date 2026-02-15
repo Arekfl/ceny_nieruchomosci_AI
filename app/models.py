@@ -1,8 +1,8 @@
 """
 Pydantic models for request and response validation
 """
-from pydantic import BaseModel, Field
-from typing import Optional, List
+from pydantic import BaseModel, Field, ConfigDict
+from typing import Optional, List, Annotated
 from enum import Enum
 
 
@@ -81,12 +81,11 @@ class PredictionRequest(BaseModel):
     building_type: BuildingType = Field(..., description="Type of building", example="bliźniak")
     market: MarketType = Field(..., description="Primary or secondary market", example="pierwotny")
     voivodeship: Voivodeship = Field(..., description="Voivodeship (province)", example="mazowieckie")
-    city: Optional[str] = Field(None, description="City name (optional, for local statistics)", example="Kraków")
-    district: Optional[str] = Field(None, description="District name (optional, for local statistics)", example="Wawer")
+    city: Annotated[Optional[str], Field(None, description="City name (optional, for local statistics)", example="Kraków")] = None
+    district: Annotated[Optional[str], Field(None, description="District name (optional, for local statistics)", example="Wawer")] = None
 
-    class Config:
-        """Configuration"""
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "area": 120.5,
                 "rooms": 4,
@@ -95,9 +94,12 @@ class PredictionRequest(BaseModel):
                 "building_material": "cegła",
                 "building_type": "bliźniak",
                 "market": "pierwotny",
-                "voivodeship": "mazowieckie"
+                "voivodeship": "mazowieckie",
+                "city": "Kraków",
+                "district": "Wawer"
             }
         }
+    )
 
 
 class PredictionResponse(BaseModel):
