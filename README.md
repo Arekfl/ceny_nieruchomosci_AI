@@ -1,32 +1,32 @@
-# Property Price Prediction System 🏠
+# Property Price Prediction System
 
 System AI do przewidywania cen mieszkań w Polsce przy użyciu machine learning.
 
-## 📋 Opis projektu
+## Opis projektu
 
-Systema jest zbudowany w celu:
+System jest zbudowany w celu:
 - **Analizy** danych dotyczących cen nieruchomości w Polsce
 - **Trenowania** modelu machine learning (Random Forest) na historycznych danych
 - **Udostępnienia** modelu jako usługi webowej (API) dla predykcji cen
 - **Filtrowania** właściwości po województwie, mieście i powiecie
 
-## 🎯 Cechy systemu
+## Cechy systemu
 
-✅ **Model Machine Learning** - Random Forest Regressor  
-✅ **API REST** - FastAPI z automatyczną dokumentacją  
-✅ **Predykcja cen** - na podstawie charakterystyk nieruchomości  
-✅ **Filtrowanie danych** - po województwie, mieście, powiecie  
-✅ **Walidacja danych** - Pydantic models  
-✅ **Dokumentacja** - Swagger/OpenAPI  
+ **Model Machine Learning** - Random Forest Regressor  
+ **API REST** - FastAPI z automatyczną dokumentacją  
+ **Predykcja cen** - na podstawie charakterystyk nieruchomości  
+ **Filtrowanie danych** - po województwie, mieście, powiecie  
+ **Walidacja danych** - Pydantic models  
+ **Dokumentacja** - Swagger/OpenAPI  
 
-## 📊 Dane treningowe
+## Dane treningowe
 
 - **Liczba próbek**: 24,181 nieruchomości
 - **Liczba cech**: 8 (powierzchnia, liczba pokoi, rok budowy, typ ogrzewania, materiał budynku, typ budynku, rynek, województwo)
 - **Województwa**: 16 polskich województw
 - **Zakresy cen**: 56,396 PLN - 1,377,242 PLN
 
-## 🤖 Model
+## Model
 
 **Typ**: Regresja (przewidywanie wartości numerycznej)  
 **Algorytm**: Random Forest Regressor (100 drzew decyzyjnych)  
@@ -38,13 +38,13 @@ Systema jest zbudowany w celu:
 - **Train set**: 19,344 próbek
 - **Test set**: 4,837 próbek
 
-## 🛠️ Wymagania
+## Wymagania
 
 - Python 3.10+
 - Narzędzie `uv` do zarządzania zależnościami
 - Git do kontroli wersji
 
-## 📦 Instalacja
+## Instalacja
 
 ### 1. Klonowanie repozytorium
 
@@ -73,7 +73,7 @@ source .venv/bin/activate  # Linux/Mac
 pip install pandas numpy scikit-learn fastapi uvicorn pydantic joblib python-dotenv
 ```
 
-## 🚀 Uruchomienie serwera
+## Uruchomienie serwera
 
 ### Opcja 1: Bezpośrednio z Pythona
 
@@ -91,7 +91,7 @@ Serwer będzie dostępny pod adresem:
 - **API**: http://localhost:8000
 - **Dokumentacja**: http://localhost:8000/docs
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### 1. Predykcja ceny
 ```http
@@ -137,7 +137,7 @@ GET /health
 GET /filter?voivodeship=mazowieckie
 ```
 
-## 🧪 Testowanie API
+## Testowanie API
 
 ```bash
 # Upewnij się że serwer jest uruchomiony
@@ -147,7 +147,7 @@ python run_server.py
 python test_api.py
 ```
 
-## 📁 Struktura projektu
+## Struktura projektu
 
 ```
 ceny_nieruchomosci_AI/
@@ -179,7 +179,7 @@ ceny_nieruchomosci_AI/
 - **Pydantic** - Walidacja danych
 - **joblib** - Serializacja modelu
 
-## 📝 Licencja
+## Licencja
 
 MIT License
 
